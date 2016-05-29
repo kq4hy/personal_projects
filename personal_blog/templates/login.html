@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>
+    PACEM Web Portal
+</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>
+    </title>
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="page-header">
+        <h3 class="text-center">
+            Login
+        </h3>
+    </div>
+    <div class="form-group" align="center">
+        {% if messages %}
+            <ul class="messages" style="list-style: none;">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% if next %}
+            <form action="{% url 'log_in' %}?next={{next}}" method="post" >
+        {% else %}
+            <form action="{% url 'log_in' %}" method="post" >
+        {% endif %}
+        {% csrf_token %}
+        <table class = "responsive">
+            <tbody>
+            {% for field in form %}
+                <tr>
+                    <td>
+                        <label for="{{field.label}}" style="display:inline-block;vertical-align:middle">
+                            {{ field.label_tag }}
+                        </label>
+                    </td>
+                    <td>
+                        {{ field }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <input type="submit" value="Log On!"/>
+        </form>
+    </div>
+    <div class="btn-group">
+        <a href="{% url 'sign_up' %}" class="btn btn-default">Sign Up</a>
+        <a href="{% url 'password_reset' %}" class="btn btn-default">Forgot Password?</a>
+    </div>
+</div>
+</body>
+</html>
